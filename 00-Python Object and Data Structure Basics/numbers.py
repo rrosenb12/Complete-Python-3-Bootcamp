@@ -1,0 +1,5 @@
+print(50+50)
+print(110-10)
+print(50*2)
+print(10**2)
+print(10000**0.5)
