@@ -1,6 +1,6 @@
 # LESSER OF TWO EVENS: Write a function that returns the lesser of two given numbers *if* both numbers are even, but returns the greater if one or both numbers are odd
 
-from doctest import master
+from operator import truediv
 
 
 def lesser_of_two_evens(a,b):
@@ -129,3 +129,64 @@ summer_69([])
 summer_69([1, 3, 5])
 summer_69([4, 5, 6, 7, 8, 9])
 summer_69([2, 1, 6, 9, 11])
+
+# SPY GAME: Write a function that takes in a list of integers and returns True if it contains 007 in order
+
+def spy_game(list):
+    my_list = []
+    for number in list:
+        if number == 0 or number == 7:
+            my_list.append(number)
+    return my_list == [0,0,7]
+
+# weird solution he came up with for this? -> actually he came up with this one because what if there are more 0's and 7's than just 3 in the list you create
+
+# def spy_game(list):
+#   code = [0,0,7,'x']
+#   for number in list:
+#       if number == code[0]:
+#           code.pop()
+#   if len(code) == 1:
+#       print(True)
+
+spy_game([1,2,4,0,0,7,5])
+spy_game([1,0,2,4,0,5,7])
+spy_game([1,7,2,0,4,5,0])
+
+#### COUNT PRIMES: Write a function that returns the *number* of prime numbers that exist up to and including a given number
+
+
+def count_primes(number):
+    # check for 0 or 1 input
+    if number < 2:
+        return 0
+    # 2 or greater, keep track of prime numbers
+    primes = [2]
+    # x will be a counter that goes up to the input number
+    x = 3
+    # x is going to go through every number up to the input number
+    while x <= number:
+        # from the number 3, until the input number, in step sizes of 2 (3 + 2, or odd plus 2, can never be even, so you're just skipping over all of the even numbers here)
+        for y in range(3,x,2):
+            # if there is no remainder after dividing x by any of the numbers in the range, it's not a prime number
+            if x%y == 0:
+                # skip the even number and break out of for loop
+                x += 2
+                break
+        else:
+            # if it is prime, add it to the list
+            primes.append(x)
+            x += 2
+    return(len(primes))
+    
+count_primes(100)
+
+# PRINT BIG: Write a function that takes in a single letter, and returns a 5x5 representation of that letter
+
+def print_big(letter):
+    patterns = {1:'  *  ',2:' * * ',3:'*   *',4:'*****',5:'**** ',6:'   * ',7:' *   ',8:'*   * ',9:'*    '}
+    alphabet = {'A':[1,2,4,3,3],'B':[5,3,5,3,5],'C':[4,9,9,9,4],'D':[5,3,3,3,5],'E':[4,9,4,9,4]}
+    for pattern in alphabet[letter.upper()]:
+        print(patterns[pattern])
+
+print_big('a')
