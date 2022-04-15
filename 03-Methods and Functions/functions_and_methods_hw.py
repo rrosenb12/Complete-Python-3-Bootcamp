@@ -74,3 +74,8 @@ def ispangram(str1, alphabet=string.ascii_lowercase):
         return("panagram")
     
 ispangram("The quick brown fox jumps over the lazy dog")
+
+def unique_list(lst):
+    return list(set(lst))
+
+unique_list([1,1,1,1,1,1,1,1,1,1,1,2,2,3,3,3,3,3,3,3,4,5])
