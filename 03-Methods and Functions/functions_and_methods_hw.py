@@ -1,6 +1,5 @@
 # Write a function that computes the volume of a sphere given its radius.
 
-from ast import Return
 from cmath import pi
 
 def vol(rad):
