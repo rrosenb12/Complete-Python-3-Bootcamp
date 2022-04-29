@@ -16,17 +16,17 @@ def pick_marker():
             else:
                 player_2 = 'X'
                 print("PLAYER 1:", player_1, "PLAYER 2:", player_2)
-            show_board(board,player_1,player_2)
+            take_turn(board,turns,player_1,player_2)
 
-def show_board(board,player_1,player_2):
+def show_board(board):
     print(board[0] + '|' +board[1]+'|'+board[2])
     print('-|-|-')
     print(board[3] + '|' +board[4]+'|'+board[5])
     print('-|-|-')
     print(board[6] + '|' +board[7]+'|'+board[8])
-    take_turn(board,turns,player_1,player_2)
-
+    
 def take_turn(board,turns,player_1,player_2):
+    show_board(board)
     valid_turn = False
     while valid_turn == False:
         user_choice = input('Pick a number between 1 and 9: ')
@@ -38,13 +38,13 @@ def take_turn(board,turns,player_1,player_2):
             continue
 
 def change_board(board,user_choice, turns,player_1,player_2):
-    print(user_choice)
     for idx in range(len(board)):
         if user_choice == board[idx]:
             if turns % 2 == 0:
                 board[idx] = player_2
             else:
                 board[idx] = player_1
-                print(board)
+    take_turn(board,turns,player_1,player_2)
             
 pick_marker()
+show_board(board)
