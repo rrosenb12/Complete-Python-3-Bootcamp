@@ -1,8 +1,8 @@
 board = ['1','2','3','4','5','6','7','8','9']
 turns = 0
+valid_marker = False
 
-def pick_marker():
-    valid_marker = False 
+def pick_marker(valid_marker):
     while valid_marker == False:
         player_1 = input('Player 1, do you want X or O: ').upper()
         if player_1 not in ['X', 'O']:
@@ -12,11 +12,10 @@ def pick_marker():
             valid_marker = True
             if player_1 == 'X':
                 player_2 = 'O'
-                print("PLAYER 1:", player_1, "PLAYER 2:", player_2)
             else:
                 player_2 = 'X'
-                print("PLAYER 1:", player_1, "PLAYER 2:", player_2)
-            take_turn(board,turns,player_1,player_2)
+    print("PLAYER 1:", player_1, "PLAYER 2:", player_2)
+    take_turn(board,turns,player_1,player_2)
 
 def show_board(board):
     print(board[0] + '|' +board[1]+'|'+board[2])
@@ -48,4 +47,4 @@ def change_board(board,user_choice, turns,player_1,player_2):
             continue
     take_turn(board,turns,player_1,player_2)
             
-pick_marker()
+pick_marker(valid_marker)
