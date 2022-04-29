@@ -32,7 +32,6 @@ def take_turn(board,turns,player_1,player_2):
         user_choice = input('Pick a number between 1 and 9: ')
         if user_choice.isdigit() and int(user_choice) in range(1,10):
             valid_turn = True
-            turns = turns + 1
             change_board(board, user_choice, turns,player_1,player_2)
         else:
             continue
@@ -40,11 +39,13 @@ def take_turn(board,turns,player_1,player_2):
 def change_board(board,user_choice, turns,player_1,player_2):
     for idx in range(len(board)):
         if user_choice == board[idx]:
+            turns = turns + 1
             if turns % 2 == 0:
                 board[idx] = player_2
             else:
                 board[idx] = player_1
+        else:
+            continue
     take_turn(board,turns,player_1,player_2)
             
 pick_marker()
-show_board(board)
