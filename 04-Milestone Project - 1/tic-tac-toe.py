@@ -2,7 +2,6 @@ board = ['1','2','3','4','5','6','7','8','9']
 turns = 0
 valid_marker = False
 user_choice = ''
-# winner = ''
 
 def pick_marker(valid_marker):
     while valid_marker == False:
@@ -76,6 +75,7 @@ def check_win(player_1,player_2,turns):
         take_turn(board,turns,player_1,player_2)
 
 def show_board(board):
+    print('\n'*100)
     print(board[0] + '|' +board[1]+'|'+board[2])
     print('-|-|-')
     print(board[3] + '|' +board[4]+'|'+board[5])
@@ -85,8 +85,13 @@ def show_board(board):
 def take_turn(board,turns,player_1,player_2):
     show_board(board)
     valid_turn = False
+    current_player = ''
     while valid_turn == False:
-        user_choice = input('Pick a number between 1 and 9: ')
+        if turns %2 == 0:
+            current_player = 'Player 1'
+        else:
+            current_player = 'Player 2'
+        user_choice = input('{}, pick a number between 1 and 9: '.format(current_player))
         if user_choice.isdigit() and int(user_choice) in range(1,10):
             valid_turn = True            
             change_board(board, user_choice, turns,player_1,player_2)
