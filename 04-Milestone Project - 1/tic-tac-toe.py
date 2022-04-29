@@ -18,7 +18,6 @@ def pick_marker(valid_marker):
                 player_2 = 'X'
     print("PLAYER 1:", player_1, "PLAYER 2:", player_2)
     take_turn(board,turns,player_1,player_2)
-    # check_win(player_1,player_2)
 
 def check_win(player_1,player_2,turns):
     win = False
