@@ -37,7 +37,7 @@ class Deck:
                 created_card = Card(suit,rank)
                 # create the card object
                 self.all_cards.append(created_card)
-                
+
     # Doesn't happen immediately because not in __init__ -> need to call it
     def shuffle(self):
         random.shuffle(self.all_cards)
@@ -48,16 +48,16 @@ class Deck:
 new_deck = Deck()
 
 first_card = new_deck.all_cards[0]
-print(first_card)
+# print(first_card)
 
 new_deck.shuffle()
 
 first_card = new_deck.all_cards[0]
-print(first_card)
+# print(first_card)
 
 my_card = new_deck.deal_one()
 
-print(my_card)
+# print(my_card)
 
 # Will be 51 because we dealt 1
-print(len(new_deck.all_cards))
+## print(len(new_deck.all_cards))
