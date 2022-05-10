@@ -38,6 +38,6 @@ def ask():
             continue 
         else:
             user_input = val
-            print("All done")
+            print("Your number squared is: ", user_input**2)
 
 ask()
