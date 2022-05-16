@@ -1,5 +1,6 @@
 # from unittest.util import three_way_cmp
 from hashlib import new
+from inspect import Attribute
 import random
 
 values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':11, 'Queen':12, 'King':13, 'Ace':14}
@@ -71,7 +72,12 @@ class Player:
         self.all_cards = []
 
     def remove_one(self):
-        return self.all_cards.pop(0) 
+        try:
+            return self.all_cards.pop(0) 
+        except IndexError:
+            print("No More Cards to Pop, Index Error in Player Class")
+##        finally:
+##            print("Game Over, Index Error in Player Class")
 
     def add_cards(self,new_cards):
         # For multiple card objects -> extend adds list to list without nesting it. 
@@ -157,41 +163,50 @@ while game_on:
     while at_war:
 
         # If at official war, there are multiple cards currently in play for each player. If not at official war and regular game play, just one card in list. Check the last current card at play either way since game logic is relatively the same for both instances, just depends on if they draw more than 1 card at a time
-        if player_one_cards[-1].value > player_two_cards[-1].value:
+        try:
+            if player_one_cards[-1].value > player_two_cards[-1].value:
 
-            player_one.add_cards(player_one_cards)
-            player_one.add_cards(player_two_cards)
+                player_one.add_cards(player_one_cards)
+                player_one.add_cards(player_two_cards)
 
+                at_war = False
+
+            elif player_one_cards[-1].value < player_two_cards[-1].value:
+
+                player_two.add_cards(player_one_cards)
+                player_two.add_cards(player_two_cards)
+
+                at_war = False
+                    # This is the logic where an official war occurs
+            else: 
+
+                print("WAR!")
+
+                if len(player_one.all_cards) < 5:
+                
+                    print("Player One unable to war")
+                    print("Player Two wins!")
+                    at_war = False
+                    game_on = False
+                    # break
+
+                elif len(player_two.all_cards) < 5:
+
+                    print("Player Two unable to war")
+                    print("Player One wins!")
+                    at_war = False
+                    game_on = False
+                    # break
+
+                else:
+                    for num in range(5):
+
+                        player_one_cards.append(player_one.remove_one())
+                        player_two_cards.append(player_two.remove_one())
+        except AttributeError:
+            print("No more cards to compare")
             at_war = False
+            game_on = False
+            # break
 
-        elif player_one_cards[-1].value < player_two_cards[-1].value:
 
-            player_two.add_cards(player_one_cards)
-            player_two.add_cards(player_two_cards)
-
-            at_war = False
-
-        # This is the logic where an official war occurs
-        else: 
-
-            print("WAR!")
-
-            if len(player_one.all_cards) < 5:
-            
-                print("Player One unable to war")
-                print("Player Two wins!")
-                game_on = False
-                break
-
-            elif len(player_two.all_cards) < 5:
-
-                print("Player Two unable to war")
-                print("Player One wins!")
-                game_on = False
-                break
-
-            else:
-                for num in range(5):
-
-                    player_one_cards.append(player_one.remove_one())
-                    player_two_cards.append(player_two.remove_one())
