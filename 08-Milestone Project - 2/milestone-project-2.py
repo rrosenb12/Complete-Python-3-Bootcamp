@@ -130,7 +130,34 @@ def take_bet():
             print("That's not a number! Try again.")
             continue
         else:
-            my_chips.bet = player_bet
-            valid_bet = True
+            if player_bet > my_chips.total:
+                print("You can't bet more than 100. Try Again.")
+                continue
+            elif player_bet <= 0:
+                print("You can't bet negative numbers, and you can't bet 0! Try again.")
+                continue
+            else:
+                my_chips.bet = player_bet
+                valid_bet = True
+
+def hit(my_hand,new_deck):
+    my_hand.add_card(new_deck.deal())
+    print(my_hand.cards[-1])
+    my_hand.adjust_for_ace()
+
+def hit_or_stand(my_hand, new_deck):
+    global playing
+    while playing:
+        user_choice = input("Would you like to hit or stand? ")
+        if user_choice[0].lower() == "h":
+            hit(my_hand,new_deck)
+        elif user_choice[0].lower() == "s":
+            print("Player stands, dealer's turn")
+            playing = False
+        else:
+            print("Sorry, please choose Hit or Stand")
+            continue
     
 take_bet()
+hit(my_hand,new_deck)
+hit_or_stand(my_hand,new_deck)
