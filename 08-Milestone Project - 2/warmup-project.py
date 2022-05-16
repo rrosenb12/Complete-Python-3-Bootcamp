@@ -17,13 +17,15 @@ class Card:
     def __str__(self):
         return self.rank + " of " + self.suit
 
-""" two_hearts = Card("Hearts","Two")
+""" 
+two_hearts = Card("Hearts","Two")
 print(two_hearts)
 # Two of Hearts
 print(two_hearts.value)
 # 2
 
-three_of_clubs = Card("Clubs","Three") """
+three_of_clubs = Card("Clubs","Three") 
+"""
 
 class Deck:
     # Instantiate new deck with all 52 card objects -> hold as a list of card objects
@@ -88,6 +90,7 @@ class Player:
     def __str__(self):
         return f'Player {self.name} has {len(self.all_cards)} cards.'
 
+"""
 new_player = Player("Jose")
 print(new_player)
 # 0 cards
@@ -101,3 +104,94 @@ print(new_player)
 new_player.remove_one()
 print(new_player)
 # 3 cards
+"""
+
+### GAME LOGIC ###
+
+player_one = Player("One")
+player_two = Player("Two")
+
+new_deck = Deck()
+new_deck.shuffle()
+
+# Don't need to go through this 52 times since you're dealing two cards in each for loop to each player
+for x in range(26):
+    player_one.add_cards(new_deck.deal_one())
+    player_two.add_cards(new_deck.deal_one())
+
+# print(len(player_one.all_cards))
+## 26
+
+game_on = True
+round_number = 0
+
+while game_on:
+
+    round_number += 1
+    print(f'Round {round_number}')
+
+    # CHECK THAT PLAYER STILL HAVE CARDS #
+
+    if len(player_one.all_cards) == 0:
+        print("Player One out of cards, player Two wins!")
+        game_on = False
+        # Will automatically break out of loop once game_on is False
+        # break
+    if len(player_two.all_cards) == 0:
+        print("Player Two out of cards, player One wins!")
+        game_on = False
+        # break
+    
+    # START A NEW ROUND #
+
+    # Different from all_cards; these are the cards currently in play
+    player_one_cards = []
+    # Takes one card from respective player's deck, becomes current card in play
+    player_one_cards.append(player_one.remove_one())
+    player_two_cards = []
+    player_two_cards.append(player_two.remove_one())
+
+    # Always assume a war, just so that the comparison can happen (even if there isn't an official war and it's just one card)
+    at_war = True 
+    
+    while at_war:
+
+        # If at official war, there are multiple cards currently in play for each player. If not at official war and regular game play, just one card in list. Check the last current card at play either way since game logic is relatively the same for both instances, just depends on if they draw more than 1 card at a time
+        if player_one_cards[-1].value > player_two_cards[-1].value:
+
+            player_one.add_cards(player_one_cards)
+            player_one.add_cards(player_two_cards)
+
+            at_war = False
+
+        elif player_one_cards[-1].value < player_two_cards[-1].value:
+
+            player_two.add_cards(player_one_cards)
+            player_two.add_cards(player_two_cards)
+
+            at_war = False
+
+        # This is the logic where an official war occurs
+        else: 
+
+            print("WAR!")
+
+            if len(player_one.all_cards) < 5:
+            
+                print("Player One unable to war")
+                print("Player Two wins!")
+                game_on = False
+                break
+
+            elif len(player_two.all_cards) < 5:
+
+                print("Player Two unable to war")
+                print("Player One wins!")
+                game_on = False
+                break
+
+            else:
+                for num in range(5):
+
+                    player_one_cards.append(player_one.remove_one())
+                    player_two_cards.append(player_two.remove_one())
