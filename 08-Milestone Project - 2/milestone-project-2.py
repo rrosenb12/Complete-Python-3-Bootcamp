@@ -22,7 +22,7 @@
 
 import random
 
-values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':[1,11]}
+values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':11}
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
 
@@ -77,9 +77,14 @@ class Hand:
 
     def add_card(self, card):
         self.cards.append(card)
+        self.value += values[card.rank]
+        if card.rank == "Ace":
+            self.aces += 1
     
     def adjust_for_ace(self):
-        pass
+        while self.value > 21 and self.aces:
+            self.value -= 10
+            self.aces -= 1
 
     def __str__(self):
         return f'{self.cards}'
@@ -87,10 +92,28 @@ class Hand:
 my_hand = Hand()
 my_hand.add_card(new_deck.deal())
 my_hand.add_card(new_deck.deal())
+"""
 for card in my_hand.cards:
     print(card)
+- returning cards
+"""
+print(my_hand.value)
 
 dealer_hand = Hand()
 dealer_hand.add_card(new_deck.deal())
 dealer_hand.add_card(new_deck.deal())
+"""
 print(dealer_hand.cards[0])
+- returning first card
+"""
+
+class Chips:
+    def __init__(self):
+        self.total = 100
+        self.bet = 0
+    
+    def win_bet(self):
+        self.total += self.bet 
+
+    def lose_bet(self):
+        self.total -= self.bet
