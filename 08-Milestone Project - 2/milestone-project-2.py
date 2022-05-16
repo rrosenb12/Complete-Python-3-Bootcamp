@@ -96,8 +96,9 @@ my_hand.add_card(new_deck.deal())
 for card in my_hand.cards:
     print(card)
 - returning cards
-"""
 print(my_hand.value)
+- printing value of hand
+"""
 
 dealer_hand = Hand()
 dealer_hand.add_card(new_deck.deal())
@@ -117,3 +118,19 @@ class Chips:
 
     def lose_bet(self):
         self.total -= self.bet
+
+my_chips = Chips()
+
+def take_bet():
+    valid_bet = False
+    while not valid_bet:
+        try:
+            player_bet = int(input("What would you like to bet? "))
+        except ValueError:
+            print("That's not a number! Try again.")
+            continue
+        else:
+            my_chips.bet = player_bet
+            valid_bet = True
+    
+take_bet()
